@@ -11,7 +11,14 @@
     "dist/main.js": "./dist/main.browser.js"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prebuild": "npm install",
+    "build": "webpack || echo not ok",
+    "test": "jest",
+    "test:watch": "npm test -- --watch",
+    "coverage": "npm test -- --coverage --no-cache",
+    "coverage:watch": "npm run coverage -- --watch",
+    "prerelease": "npm run build && npm test",
+    "release": "standard-version && npm pack"
   },
   "repository": {
     "type": "git",
@@ -26,7 +33,14 @@
   "devDependencies": {
     "@types/node": "^8.0.3",
     "browserify": "^14.4.0",
-    "typescript": "^2.3.4"
+    "delete-empty": "^1.0.1",
+    "dts-bundle": "^0.7.3",
+    "standard-version": "^4.2.0",
+    "tslint": "^5.4.3",
+    "tslint-loader": "^3.5.3",
+    "typescript": "^2.3.4",
+    "webpack": "^3.0.0",
+    "webpack-node-externals": "^1.6.0"
   },
   "dependencies": {
     "ethereumjs-util": "^5.1.2",

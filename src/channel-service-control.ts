@@ -1,4 +1,5 @@
-import { SignedIdentity, FullIdentity, AddressIdentity } from "./channel-service-identity";
+
+import { FullIdentity, AddressIdentity, SignedAddressIdentity, SignedKeyIdentity } from "./channel-service-identity";
 
 // ----------------------------------------------------------------------------
 // This defines the content of the messages carried on the control channel
@@ -17,7 +18,7 @@ export interface ControlChannelMessage {
 // type = 'join'
 export interface JoinRequestDetails {
   channelAddress: string;
-  memberIdentity: SignedIdentity<AddressIdentity>;
+  memberIdentity: SignedAddressIdentity;
   participantIdentityDetails: any;
 }
 
@@ -25,7 +26,6 @@ export interface JoinRequestDetails {
 export interface JoinResponseDetails {
   channelAddress: string;
   channelCode: number;
-  participantAddress: string;
   participantCode: number;
   participants: ChannelParticipantInfo[];
 }
@@ -33,7 +33,6 @@ export interface JoinResponseDetails {
 // type = 'leave'
 export interface LeaveRequestDetails {
   channelAddress: string;
-  memberAddress: string;
   permanently?: boolean;
 }
 
@@ -81,7 +80,7 @@ export interface RateLimitDetails {
 // type = 'notify-join'
 export interface JoinNotificationDetails {
   channelAddress: string;
-  memberIdentity: SignedIdentity<FullIdentity>;
+  memberIdentity: SignedKeyIdentity;
 
   participantCode: number;
   participantDetails: any;
@@ -110,7 +109,7 @@ export interface ControlMessagePayload {
 }
 
 export interface ChannelParticipantIdentity {
-  memberIdentity: SignedIdentity<FullIdentity>;
+  signedIdentity: SignedKeyIdentity;
   participantDetails: any;
 }
 

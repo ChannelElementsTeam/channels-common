@@ -7,13 +7,19 @@ export interface KeyInfo {
   address: string;
 }
 
-export interface SignedIdentity<I extends AddressIdentity> extends Signed<I> { }
+export interface SignedKeyIdentity extends Signed {
+  publicKey: string;
+}
 
-export interface FullIdentity extends KeyIdentity, HasExtendedIdentity { }
-export interface KeyIdentity extends AddressIdentity, HasPublicKey { }
-export interface AddressIdentity extends Signable, HasAddress { }
+export interface SignedAddressIdentity extends Signed {
+  address: string;
+}
 
-export interface HasExtendedIdentity {
+export interface Signed {
+  signature: string;
+}
+
+export interface FullIdentity extends KeyIdentity {
   account?: string;
   name?: string;
   imageUrl?: string;
@@ -21,17 +27,11 @@ export interface HasExtendedIdentity {
   extensions?: any;
 }
 
-export interface HasPublicKey {
+export interface KeyIdentity extends AddressIdentity {
   publicKey: string;
 }
-
-export interface HasAddress {
+export interface AddressIdentity extends Signable {
   address: string;
-}
-
-export interface Signed<T extends Signable> {
-  info: T;
-  signature: string;
 }
 
 export interface Signable {

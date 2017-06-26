@@ -1,5 +1,5 @@
 import { MemberContractDetails, ChannelContractDetails, ChannelInformation, BasicChannelInformation } from "./channel-service-channel";
-import { AddressIdentity, SignedIdentity } from "./channel-service-identity";
+import { SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
 export declare const CHANNELS_PROTOCOL = "https://channelelements.com/protocols/client-server/0.2.0";
 export interface ChannelServiceDescription extends HasProtocolVersion, HasServiceEndpoints, HasExtensions {
     protocol: string;
@@ -22,9 +22,9 @@ export interface ChannelShareCodeResponse extends HasProtocolVersion, HasService
     invitationId: string;
     channelInfo: BasicChannelInformation;
 }
-export interface ChannelServiceRequest<I extends AddressIdentity, T> {
+export interface ChannelServiceRequest<I extends SignedKeyIdentity | SignedAddressIdentity, T> {
     type: string;
-    identity: SignedIdentity<I>;
+    identity: I;
     details: T;
 }
 export interface ChannelCreateDetails extends HasMemberContractDetails {

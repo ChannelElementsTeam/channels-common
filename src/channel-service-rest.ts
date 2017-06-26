@@ -1,5 +1,5 @@
 import { MemberContractDetails, ChannelContractDetails, ChannelInformation, BasicChannelInformation } from "./channel-service-channel";
-import { AddressIdentity, SignedIdentity } from "./channel-service-identity";
+import { AddressIdentity, Signable, SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
 
 export const CHANNELS_PROTOCOL = "https://channelelements.com/protocols/client-server/0.2.0";
 // ----------------------------------------------------------------------------
@@ -38,19 +38,19 @@ export interface ChannelShareCodeResponse extends HasProtocolVersion, HasService
 // All requests and responses are in JSON
 // ----------------------------------------------------------------------------
 
-export interface ChannelServiceRequest<I extends AddressIdentity, T> {
+export interface ChannelServiceRequest<I extends SignedKeyIdentity | SignedAddressIdentity, T> {
   type: string;
-  identity: SignedIdentity<I>; // Different requests require different types of identity
+  identity: I;
   details: T;
 }
 
-// type = 'create', I = FullIdentity
+// type = 'create', identity type:  SignedKeyIdentity
 export interface ChannelCreateDetails extends HasMemberContractDetails {
   channelContract: ChannelContractDetails; // shared with everyone
 }
 export interface ChannelCreateResponse extends ChannelInformation { }
 
-// type = 'share', I = AddressIdentity
+// type = 'share', identity type:  SignedAddressIdentity
 export interface ChannelShareDetails extends HasChannel, HasExtensions {
   extensions: any;
 }
@@ -58,21 +58,21 @@ export interface ChannelShareResponse {
   shareCodeUrl: string;
 }
 
-// type = 'get', I = AddressIdentity
+// type = 'get', identity type:  SignedAddressIdentity
 export interface ChannelGetDetails extends HasChannel { }
 export interface ChannelGetResponse extends ChannelInformation { }
 
-// type = 'accept', I = FullIdentity
+// type = 'accept', identity type:  SignedKeyIdentity
 export interface ChannelAcceptDetails extends HasMemberContractDetails {
   invitationId: string;
 }
 export interface ChannelAcceptResponse extends ChannelInformation { }
 
-// type = 'delete', I = AddressIdentity
+// type = 'delete', identity type:  SignedAddressIdentity
 export interface ChannelDeleteDetails extends HasChannel { }
 export interface ChannelDeleteResponse { }
 
-// type = 'list', I = KeyedIdentity
+// type = 'list', identity type:  SignedAddressIdentity
 export interface ChannelsListDetails {
   lastActiveBefore?: number;
   limit?: number;

@@ -6,30 +6,27 @@ export interface KeyInfo {
     ethereumAddress: string;
     address: string;
 }
-export interface SignedIdentity<I extends AddressIdentity> extends Signed<I> {
+export interface SignedKeyIdentity extends Signed {
+    publicKey: string;
 }
-export interface FullIdentity extends KeyIdentity, HasExtendedIdentity {
+export interface SignedAddressIdentity extends Signed {
+    address: string;
 }
-export interface KeyIdentity extends AddressIdentity, HasPublicKey {
+export interface Signed {
+    signature: string;
 }
-export interface AddressIdentity extends Signable, HasAddress {
-}
-export interface HasExtendedIdentity {
+export interface FullIdentity extends KeyIdentity {
     account?: string;
     name?: string;
     imageUrl?: string;
     contactMeShareCode?: string;
     extensions?: any;
 }
-export interface HasPublicKey {
+export interface KeyIdentity extends AddressIdentity {
     publicKey: string;
 }
-export interface HasAddress {
+export interface AddressIdentity extends Signable {
     address: string;
-}
-export interface Signed<T extends Signable> {
-    info: T;
-    signature: string;
 }
 export interface Signable {
     signedAt: number;

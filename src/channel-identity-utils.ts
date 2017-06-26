@@ -1,4 +1,4 @@
-import { KeyInfo, FullIdentity, SignedIdentity, KeyIdentity, AddressIdentity, Signable, Signed } from "./channel-service-identity";
+import { KeyInfo, FullIdentity, KeyIdentity, AddressIdentity, Signable, Signed, SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
 import * as crypto from 'crypto';
 const secp256k1 = require('secp256k1');
 const ethereumUtils = require('ethereumjs-util');
@@ -41,7 +41,7 @@ export class ChannelIdentityUtils {
     return result;
   }
 
-  static createSignedFullIdentity(keyInfo: KeyInfo, name?: string, imageUrl?: string, contactMeShareCode?: string, extensions?: any): SignedIdentity<FullIdentity> {
+  static createSignedFullIdentity(keyInfo: KeyInfo, name?: string, imageUrl?: string, contactMeShareCode?: string, extensions?: any): SignedKeyIdentity {
     const identity: FullIdentity = {
       address: keyInfo.address,
       account: keyInfo.ethereumAddress,
@@ -60,33 +60,33 @@ export class ChannelIdentityUtils {
     if (extensions) {
       identity.extensions = extensions;
     }
-    const result: SignedIdentity<FullIdentity> = {
-      info: identity,
-      signature: this.sign(keyInfo, identity)
-    };
-    return result;
-  }
-
-  static createSignedKeyedIdentity(keyInfo: KeyInfo): SignedIdentity<KeyIdentity> {
-    const identity: KeyIdentity = {
-      address: keyInfo.address,
+    const result: SignedKeyIdentity = {
       publicKey: keyInfo.publicKeyPem,
-      signedAt: Date.now(),
-    };
-    const result: SignedIdentity<KeyIdentity> = {
-      info: identity,
       signature: this.sign(keyInfo, identity)
     };
     return result;
   }
 
-  static createSignedAddressIdentity(keyInfo: KeyInfo, address: string): SignedIdentity<AddressIdentity> {
+  static createSignedKeyIdentity(keyInfo: KeyInfo, address: string, publicKey: string): SignedKeyIdentity {
+    const addressInfo: KeyIdentity = {
+      address: address,
+      publicKey: publicKey,
+      signedAt: Date.now()
+    };
+    const result: SignedKeyIdentity = {
+      publicKey: publicKey,
+      signature: this.sign(keyInfo, addressInfo)
+    };
+    return result;
+  }
+
+  static createSignedAddressIdentity(keyInfo: KeyInfo, address: string): SignedAddressIdentity {
     const addressInfo: AddressIdentity = {
       address: address,
       signedAt: Date.now()
     };
-    const result: SignedIdentity<AddressIdentity> = {
-      info: addressInfo,
+    const result: SignedAddressIdentity = {
+      address: address,
       signature: this.sign(keyInfo, addressInfo)
     };
     return result;
@@ -98,22 +98,24 @@ export class ChannelIdentityUtils {
       payload: object,
       privateKey: keyInfo.privateKeyPem
     });
-    const verification = this.verify(jwsSignature, keyInfo.publicKeyPem);
-    if (!verification) {
-      throw new Error("Sign/Verify is not working");
-    }
     return jwsSignature;
   }
 
-  static verifyKeyIdentity<T extends KeyIdentity>(object: SignedIdentity<T>, expectedSignTime: number): boolean {
-    return this.verifySignedObject(object, object.info.publicKey, expectedSignTime);
-  }
-
-  static verifySignedObject<T extends Signable>(object: Signed<T>, publicKey: string, expectedSignTime: number): boolean {
-    if (expectedSignTime && Math.abs(object.info.signedAt - expectedSignTime) > MAX_VERIFY_CLOCK_SKEW) {
-      return false;
+  static verifySignedObject<T extends Signable>(object: Signed, publicKey: string, expectedSignTime: number): T {
+    if (!this.verify(object.signature, publicKey)) {
+      return null;
     }
-    return this.verify(object.signature, publicKey);
+    const decoded = jws.decode(object.signature);
+    try {
+      const result = JSON.parse(decoded.payload) as T;
+      if (expectedSignTime && Math.abs(result.signedAt - expectedSignTime) > MAX_VERIFY_CLOCK_SKEW) {
+        return null;
+      }
+      return result;
+    } catch (err) {
+      console.warn("Identity.verifySignedObject: invalid JSON payload");
+      return null;
+    }
   }
 
   private static verify(signature: any, publicKeyPem: string): boolean {

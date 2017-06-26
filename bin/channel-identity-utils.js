@@ -56,20 +56,20 @@ class ChannelIdentityUtils {
             identity.extensions = extensions;
         }
         const result = {
-            info: identity,
+            publicKey: keyInfo.publicKeyPem,
             signature: this.sign(keyInfo, identity)
         };
         return result;
     }
-    static createSignedKeyedIdentity(keyInfo) {
-        const identity = {
-            address: keyInfo.address,
-            publicKey: keyInfo.publicKeyPem,
-            signedAt: Date.now(),
+    static createSignedKeyIdentity(keyInfo, address, publicKey) {
+        const addressInfo = {
+            address: address,
+            publicKey: publicKey,
+            signedAt: Date.now()
         };
         const result = {
-            info: identity,
-            signature: this.sign(keyInfo, identity)
+            publicKey: publicKey,
+            signature: this.sign(keyInfo, addressInfo)
         };
         return result;
     }
@@ -79,7 +79,7 @@ class ChannelIdentityUtils {
             signedAt: Date.now()
         };
         const result = {
-            info: addressInfo,
+            address: address,
             signature: this.sign(keyInfo, addressInfo)
         };
         return result;
@@ -90,20 +90,24 @@ class ChannelIdentityUtils {
             payload: object,
             privateKey: keyInfo.privateKeyPem
         });
-        const verification = this.verify(jwsSignature, keyInfo.publicKeyPem);
-        if (!verification) {
-            throw new Error("Sign/Verify is not working");
-        }
         return jwsSignature;
     }
-    static verifyKeyIdentity(object, expectedSignTime) {
-        return this.verifySignedObject(object, object.info.publicKey, expectedSignTime);
-    }
     static verifySignedObject(object, publicKey, expectedSignTime) {
-        if (expectedSignTime && Math.abs(object.info.signedAt - expectedSignTime) > MAX_VERIFY_CLOCK_SKEW) {
-            return false;
+        if (!this.verify(object.signature, publicKey)) {
+            return null;
         }
-        return this.verify(object.signature, publicKey);
+        const decoded = jws.decode(object.signature);
+        try {
+            const result = JSON.parse(decoded.payload);
+            if (expectedSignTime && Math.abs(result.signedAt - expectedSignTime) > MAX_VERIFY_CLOCK_SKEW) {
+                return null;
+            }
+            return result;
+        }
+        catch (err) {
+            console.warn("Identity.verifySignedObject: invalid JSON payload");
+            return null;
+        }
     }
     static verify(signature, publicKeyPem) {
         try {

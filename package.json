@@ -2,7 +2,7 @@
   "name": "channels-common",
   "version": "0.1.0",
   "description": "Common TypeScript code that could be used by the Channels server (switch) and the client",
-  "main": "dist/main.js",
+  "main": "bin/main.js",
   "scripts": {
     "prebuild": "npm install"
   },

@@ -2,23 +2,9 @@
   "name": "channels-common",
   "version": "0.1.0",
   "description": "Common TypeScript code that could be used by the Channels server (switch) and the client",
-  "main": "dist/main.js",
-  "typings": "dist/main.d.ts",
-  "jam": {
-    "main": "./dist/main.browser.js"
-  },
-  "browser": {
-    "dist/main.js": "./dist/main.browser.js"
-  },
+  "main": "main.js",
   "scripts": {
-    "prebuild": "npm install",
-    "build": "webpack || echo not ok",
-    "test": "jest",
-    "test:watch": "npm test -- --watch",
-    "coverage": "npm test -- --coverage --no-cache",
-    "coverage:watch": "npm run coverage -- --watch",
-    "prerelease": "npm run build && npm test",
-    "release": "standard-version && npm pack"
+    "prebuild": "npm install"
   },
   "repository": {
     "type": "git",
@@ -32,15 +18,9 @@
   "homepage": "https://github.com/ChannelElementsTeam/channels-common#readme",
   "devDependencies": {
     "@types/node": "^8.0.3",
-    "browserify": "^14.4.0",
-    "delete-empty": "^1.0.1",
-    "dts-bundle": "^0.7.3",
-    "standard-version": "^4.2.0",
-    "tslint": "^5.4.3",
-    "tslint-loader": "^3.5.3",
+    "ts-loader": "^2.1.0",
     "typescript": "^2.3.4",
-    "webpack": "^3.0.0",
-    "webpack-node-externals": "^1.6.0"
+    "webpack": "^3.0.0"
   },
   "dependencies": {
     "ethereumjs-util": "^5.1.2",

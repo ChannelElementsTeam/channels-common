@@ -2,7 +2,7 @@ module.exports = {
   entry: "./src/index.ts",
   output: {
     filename: "channels-web-client-lib.js",
-    path: __dirname + "/dist/"
+    path: __dirname + "/bin/"
   },
   resolve: {
     extensions: [".ts"]

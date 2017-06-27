@@ -46,6 +46,7 @@ export interface ChannelServiceRequest<I extends SignedKeyIdentity | SignedAddre
 
 // type = 'create', identity type:  SignedKeyIdentity
 export interface ChannelCreateDetails extends HasMemberContractDetails {
+  name?: string;
   channelContract: ChannelContractDetails; // shared with everyone
 }
 export interface ChannelCreateResponse extends ChannelInformation { }
@@ -135,6 +136,7 @@ export interface NotificationSettings {
   webPushNotifications?: WebPushNotificationInfo[];
   minimumWebPushIntervalMinutes?: number;
   timing?: NotificationTiming;
+  smsNotificationCallbackUrlTemplate?: string; // used to create the appropriate client URL in notifications, e.g., 'https://example-client.org/channel/{{channel}}'
 }
 
 export interface NotificationTiming {

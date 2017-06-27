@@ -7,6 +7,7 @@ export interface ChannelInformation extends BasicChannelInformation {
 }
 export interface BasicChannelInformation {
     channelAddress: string;
+    name?: string;
     contract: ChannelContractDetails;
     memberCount: number;
     created: number;

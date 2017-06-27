@@ -28,6 +28,7 @@ export interface ChannelServiceRequest<I extends SignedKeyIdentity | SignedAddre
     details: T;
 }
 export interface ChannelCreateDetails extends HasMemberContractDetails {
+    name?: string;
     channelContract: ChannelContractDetails;
 }
 export interface ChannelCreateResponse extends ChannelInformation {
@@ -62,11 +63,11 @@ export interface ChannelsListResponse {
 export interface GetRegistrationDetails {
 }
 export interface GetRegistrationResponse {
-    timezoneOffsetMinutes: number;
-    notifications: NotificationSettings;
+    timezone?: string;
+    notifications?: NotificationSettings;
 }
 export interface UpdateRegistrationDetails {
-    timezoneOffsetMinutes?: number;
+    timezone?: string;
     notificationsUpdate?: NotificationSettings;
 }
 export interface UpdateRegistrationResponse extends GetRegistrationResponse {
@@ -98,6 +99,7 @@ export interface NotificationSettings {
     webPushNotifications?: WebPushNotificationInfo[];
     minimumWebPushIntervalMinutes?: number;
     timing?: NotificationTiming;
+    smsNotificationCallbackUrlTemplate?: string;
 }
 export interface NotificationTiming {
     notBeforeMinutes: number;

@@ -86,8 +86,8 @@ export interface ChannelsListResponse {
 export interface GetRegistrationDetails { }
 
 export interface GetRegistrationResponse {
-  timezoneOffsetMinutes: number;  // as returned by new Date().getTimezoneOffset -- i.e., +480 for UTC-08:00
-  notifications: NotificationSettings;  // applies to subscribed channels
+  timezoneOffsetMinutes?: number;  // as returned by new Date().getTimezoneOffset -- i.e., +480 for UTC-08:00
+  notifications?: NotificationSettings;  // applies to subscribed channels
 }
 
 // type = 'update-registration', identity type: SignedKeyIdentity

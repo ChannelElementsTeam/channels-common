@@ -59,6 +59,18 @@ export interface ChannelsListResponse {
     total: number;
     channels: ChannelInformation[];
 }
+export interface GetRegistrationDetails {
+}
+export interface GetRegistrationResponse {
+    timezoneOffsetMinutes: number;
+    notifications: NotificationSettings;
+}
+export interface UpdateRegistrationDetails {
+    timezoneOffsetMinutes?: number;
+    notificationsUpdate?: NotificationSettings;
+}
+export interface UpdateRegistrationResponse extends GetRegistrationResponse {
+}
 export interface ProviderServiceEndpoints {
     descriptionUrl: string;
     homeUrl: string;
@@ -78,4 +90,21 @@ export interface HasProtocolVersion {
 }
 export interface HasServiceEndpoints {
     serviceEndpoints: ProviderServiceEndpoints;
+}
+export interface NotificationSettings {
+    suspended?: boolean;
+    smsNumber?: string;
+    minimumSmsIntervalMinutes?: number;
+    webPushNotifications?: WebPushNotificationInfo[];
+    minimumWebPushIntervalMinutes?: number;
+    timing?: NotificationTiming;
+}
+export interface NotificationTiming {
+    notBeforeMinutes: number;
+    notAfterMinutes: number;
+    noNotificationDays: number[];
+}
+export interface WebPushNotificationInfo {
+    type: string;
+    browserPublicKey: string;
 }

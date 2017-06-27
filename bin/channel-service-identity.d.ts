@@ -20,6 +20,7 @@ export interface FullIdentity extends KeyIdentity {
     name?: string;
     imageUrl?: string;
     contactMeShareCode?: string;
+    timezoneOffsetMinutes?: number;
     extensions?: any;
 }
 export interface KeyIdentity extends AddressIdentity {

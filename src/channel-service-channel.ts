@@ -50,11 +50,5 @@ export interface ChannelOptions {
 }
 
 export interface MemberContractDetails {
-  notificationType: string; // none, sms, web-push
-  notificationDetails?: MemberContractSmsDetails; // | others depending on type
-}
-
-export interface MemberContractSmsDetails {
-  smsNumber: string;  // E.164 format, e.g., +16505551212
-  reference: string; // something to be appeneded to message -- typically client URL
+  subscribe: boolean; // if true, server will attempt to notify about new channel activity
 }

@@ -82,6 +82,22 @@ export interface ChannelsListResponse {
   channels: ChannelInformation[];
 }
 
+// type = 'get-registration', identity type: SignedKeyIdentity
+export interface GetRegistrationDetails { }
+
+export interface GetRegistrationResponse {
+  timezoneOffsetMinutes: number;  // as returned by new Date().getTimezoneOffset -- i.e., +480 for UTC-08:00
+  notifications: NotificationSettings;  // applies to subscribed channels
+}
+
+// type = 'update-registration', identity type: SignedKeyIdentity
+export interface UpdateRegistrationDetails {
+  timezoneOffsetMinutes?: number;
+  notificationsUpdate?: NotificationSettings; // only included fields will be modified
+}
+
+export interface UpdateRegistrationResponse extends GetRegistrationResponse { }
+
 // ----------------------------------------------------------------------------
 // Miscellaneous interfaces
 // ----------------------------------------------------------------------------
@@ -110,4 +126,23 @@ export interface HasProtocolVersion {
 
 export interface HasServiceEndpoints {
   serviceEndpoints: ProviderServiceEndpoints;
+}
+
+export interface NotificationSettings {
+  suspended?: boolean; // while true, no notifications sent
+  smsNumber?: string;  // E.164 format (e.g., "+16505551212")
+  minimumSmsIntervalMinutes?: number;
+  webPushNotifications?: WebPushNotificationInfo[];
+  minimumWebPushIntervalMinutes?: number;
+  timing?: NotificationTiming;
+}
+
+export interface NotificationTiming {
+  notBeforeMinutes: number; // no notifications before this number of minutes after midnight local time
+  notAfterMinutes: number; // no notifications after this number of minutes after midnight local time
+  noNotificationDays: number[]; // days of week (0 = Sunday, 6 = Saturday) on which notifications will not be sent at any time
+}
+export interface WebPushNotificationInfo {
+  type: string;  // chrome, firefox, safari
+  browserPublicKey: string;
 }

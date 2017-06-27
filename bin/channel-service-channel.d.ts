@@ -42,10 +42,5 @@ export interface ChannelOptions {
     topology: string;
 }
 export interface MemberContractDetails {
-    notificationType: string;
-    notificationDetails?: MemberContractSmsDetails;
-}
-export interface MemberContractSmsDetails {
-    smsNumber: string;
-    reference: string;
+    subscribe: boolean;
 }

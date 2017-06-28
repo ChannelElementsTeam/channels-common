@@ -1,5 +1,5 @@
 import { MemberContractDetails, ChannelContractDetails, ChannelInformation, BasicChannelInformation } from "./channel-service-channel";
-import { AddressIdentity, Signable, SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
+import { SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
 
 export const CHANNELS_PROTOCOL = "https://channelelements.com/protocols/client-server/0.2.0";
 // ----------------------------------------------------------------------------

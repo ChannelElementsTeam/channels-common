@@ -24,7 +24,7 @@ export interface FullIdentity extends KeyIdentity {
   name?: string;
   imageUrl?: string;
   contactMeShareCode?: string;
-  timezoneOffsetMinutes?: number;  //minutes before UTC (e.g., Pacific GMT-08:00 = 480)
+  timezoneOffsetMinutes?: number;  // minutes before UTC (e.g., Pacific GMT-08:00 = 480)
   extensions?: any;
 }
 

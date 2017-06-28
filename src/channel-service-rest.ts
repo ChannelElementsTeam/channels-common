@@ -94,7 +94,7 @@ export interface GetRegistrationResponse {
 // type = 'update-registration', identity type: SignedKeyIdentity
 export interface UpdateRegistrationDetails {
   timezone?: string;
-  notificationsUpdate?: NotificationSettings; // only included fields will be modified
+  notifications?: NotificationSettings; // only included fields will be modified
 }
 
 export interface UpdateRegistrationResponse extends GetRegistrationResponse { }

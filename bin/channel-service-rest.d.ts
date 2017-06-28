@@ -68,7 +68,7 @@ export interface GetRegistrationResponse {
 }
 export interface UpdateRegistrationDetails {
     timezone?: string;
-    notificationsUpdate?: NotificationSettings;
+    notifications?: NotificationSettings;
 }
 export interface UpdateRegistrationResponse extends GetRegistrationResponse {
 }

@@ -1,7 +1,9 @@
+import { ControlChannelMessage } from "./channel-service-control";
 export declare class ChannelMessageUtils {
     static MESSAGE_HEADER_LENGTH: number;
     static CHANNEL_ELEMENTS_VERSION_V1: number;
     static serializeControlMessage(requestId: string, type: string, details: any, binaryPortion?: Uint8Array): Uint8Array;
+    static createControlMessage(requestId: string, type: string, details: any): ControlChannelMessage;
     static serializeChannelMessage(messageInfo: MessageToSerialize, lastTimestampSent: number, clockSkew: number): Uint8Array;
     static parseChannelMessage(message: Uint8Array, enforceClockSync?: boolean): DeserializedMessage;
 }

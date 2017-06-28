@@ -3,13 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const text_encoding_utf_8_1 = require("text-encoding-utf-8");
 class ChannelMessageUtils {
     static serializeControlMessage(requestId, type, details, binaryPortion) {
-        const controlMessage = {
-            type: type,
-            details: details
-        };
-        if (requestId) {
-            controlMessage.requestId = requestId;
-        }
+        const controlMessage = this.createControlMessage(requestId, type, details);
         const messageInfo = {
             channelCode: 0,
             senderCode: 0,
@@ -19,6 +13,16 @@ class ChannelMessageUtils {
             binaryPayload: binaryPortion
         };
         return this.serializeChannelMessage(messageInfo, 0, 0);
+    }
+    static createControlMessage(requestId, type, details) {
+        const controlMessage = {
+            type: type,
+            details: details
+        };
+        if (requestId) {
+            controlMessage.requestId = requestId;
+        }
+        return controlMessage;
     }
     static serializeChannelMessage(messageInfo, lastTimestampSent, clockSkew) {
         // Allocate the proper length...

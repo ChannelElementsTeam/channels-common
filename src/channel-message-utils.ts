@@ -6,13 +6,7 @@ export class ChannelMessageUtils {
   static CHANNEL_ELEMENTS_VERSION_V1 = 0xCEB1;
 
   static serializeControlMessage(requestId: string, type: string, details: any, binaryPortion?: Uint8Array): Uint8Array {
-    const controlMessage: ControlChannelMessage = {
-      type: type,
-      details: details
-    };
-    if (requestId) {
-      controlMessage.requestId = requestId;
-    }
+    const controlMessage = this.createControlMessage(requestId, type, details);
     const messageInfo: MessageToSerialize = {
       channelCode: 0,
       senderCode: 0,
@@ -22,6 +16,17 @@ export class ChannelMessageUtils {
       binaryPayload: binaryPortion
     };
     return this.serializeChannelMessage(messageInfo, 0, 0);
+  }
+
+  static createControlMessage(requestId: string, type: string, details: any): ControlChannelMessage {
+    const controlMessage: ControlChannelMessage = {
+      type: type,
+      details: details
+    };
+    if (requestId) {
+      controlMessage.requestId = requestId;
+    }
+    return controlMessage;
   }
 
   static serializeChannelMessage(messageInfo: MessageToSerialize, lastTimestampSent: number, clockSkew: number): Uint8Array {

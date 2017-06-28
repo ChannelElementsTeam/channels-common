@@ -19,12 +19,18 @@ export class ChannelMessageUtils {
   }
 
   static createControlMessage(requestId: string, type: string, details: any): ControlChannelMessage {
-    const controlMessage: ControlChannelMessage = {
-      type: type,
-      details: details
-    };
+    let controlMessage: ControlChannelMessage;
     if (requestId) {
-      controlMessage.requestId = requestId;
+      controlMessage = {
+        requestId: requestId,
+        type: type,
+        details: details
+      };
+    } else {
+      controlMessage = {
+        type: type,
+        details: details
+      };
     }
     return controlMessage;
   }

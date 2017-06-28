@@ -17,12 +17,19 @@ var ChannelMessageUtils = (function () {
         return this.serializeChannelMessage(messageInfo, 0, 0);
     };
     ChannelMessageUtils.createControlMessage = function (requestId, type, details) {
-        var controlMessage = {
-            type: type,
-            details: details
-        };
+        var controlMessage;
         if (requestId) {
-            controlMessage.requestId = requestId;
+            controlMessage = {
+                requestId: requestId,
+                type: type,
+                details: details
+            };
+        }
+        else {
+            controlMessage = {
+                type: type,
+                details: details
+            };
         }
         return controlMessage;
     };

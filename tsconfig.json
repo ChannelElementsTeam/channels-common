@@ -4,7 +4,7 @@
     "sourceMap": true,
     "noImplicitAny": true,
     "module": "commonjs",
-    "target": "es6",
+    "target": "es5",
     "declaration": true,
     "baseUrl": ".",
     "paths": {
@@ -14,7 +14,7 @@
       ]
     },
     "lib": [
-      "es6",
+      "es2015",
       "dom"
     ]
   }

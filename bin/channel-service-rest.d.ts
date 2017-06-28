@@ -68,7 +68,7 @@ export interface GetRegistrationResponse {
 }
 export interface UpdateRegistrationDetails {
     timezone?: string;
-    notificationsUpdate?: NotificationSettings;
+    notifications?: NotificationSettings;
 }
 export interface UpdateRegistrationResponse extends GetRegistrationResponse {
 }
@@ -100,6 +100,8 @@ export interface NotificationSettings {
     minimumWebPushIntervalMinutes?: number;
     timing?: NotificationTiming;
     smsNotificationCallbackUrlTemplate?: string;
+    minimumChannelInactiveNotificationIntervalMinutes?: number;
+    minimumChannelActiveNotificationIntervalMinutes?: number;
 }
 export interface NotificationTiming {
     notBeforeMinutes: number;

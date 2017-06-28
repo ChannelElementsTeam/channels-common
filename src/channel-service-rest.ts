@@ -94,7 +94,7 @@ export interface GetRegistrationResponse {
 // type = 'update-registration', identity type: SignedKeyIdentity
 export interface UpdateRegistrationDetails {
   timezone?: string;
-  notificationsUpdate?: NotificationSettings; // only included fields will be modified
+  notifications?: NotificationSettings; // only included fields will be modified
 }
 
 export interface UpdateRegistrationResponse extends GetRegistrationResponse { }
@@ -137,6 +137,8 @@ export interface NotificationSettings {
   minimumWebPushIntervalMinutes?: number;
   timing?: NotificationTiming;
   smsNotificationCallbackUrlTemplate?: string; // used to create the appropriate client URL in notifications, e.g., 'https://example-client.org/channel/{{channel}}'
+  minimumChannelInactiveNotificationIntervalMinutes?: number; // when you've been notified for a channel since you were last active, this is the minimum interval in between notifications
+  minimumChannelActiveNotificationIntervalMinutes?: number; // when you have been active on a channel since the last notification about that channel, this is the minimum interval before a notification
 }
 
 export interface NotificationTiming {

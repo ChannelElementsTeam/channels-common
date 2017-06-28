@@ -100,6 +100,8 @@ export interface NotificationSettings {
     minimumWebPushIntervalMinutes?: number;
     timing?: NotificationTiming;
     smsNotificationCallbackUrlTemplate?: string;
+    minimumChannelInactiveNotificationIntervalMinutes?: number;
+    minimumChannelActiveNotificationIntervalMinutes?: number;
 }
 export interface NotificationTiming {
     notBeforeMinutes: number;

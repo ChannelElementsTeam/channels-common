@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "ethereumjs-util": "^5.1.2",
-    "jsw": "^4.0.2",
+    "jws": "^3.1.4",
     "key-encoder": "^1.1.6",
     "secp256k1": "^3.3.0",
     "text-encoding-utf-8": "^1.0.1"

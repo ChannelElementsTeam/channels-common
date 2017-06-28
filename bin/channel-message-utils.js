@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const text_encoding_utf_8_1 = require("text-encoding-utf-8");
-class ChannelMessageUtils {
-    static serializeControlMessage(requestId, type, details, binaryPortion) {
-        const controlMessage = this.createControlMessage(requestId, type, details);
-        const messageInfo = {
+var text_encoding_utf_8_1 = require("text-encoding-utf-8");
+var ChannelMessageUtils = (function () {
+    function ChannelMessageUtils() {
+    }
+    ChannelMessageUtils.serializeControlMessage = function (requestId, type, details, binaryPortion) {
+        var controlMessage = this.createControlMessage(requestId, type, details);
+        var messageInfo = {
             channelCode: 0,
             senderCode: 0,
             history: false,
@@ -13,9 +15,9 @@ class ChannelMessageUtils {
             binaryPayload: binaryPortion
         };
         return this.serializeChannelMessage(messageInfo, 0, 0);
-    }
-    static createControlMessage(requestId, type, details) {
-        const controlMessage = {
+    };
+    ChannelMessageUtils.createControlMessage = function (requestId, type, details) {
+        var controlMessage = {
             type: type,
             details: details
         };
@@ -23,11 +25,11 @@ class ChannelMessageUtils {
             controlMessage.requestId = requestId;
         }
         return controlMessage;
-    }
-    static serializeChannelMessage(messageInfo, lastTimestampSent, clockSkew) {
+    };
+    ChannelMessageUtils.serializeChannelMessage = function (messageInfo, lastTimestampSent, clockSkew) {
         // Allocate the proper length...
-        let jsonPayloadBuffer;
-        let length = this.MESSAGE_HEADER_LENGTH;
+        var jsonPayloadBuffer;
+        var length = this.MESSAGE_HEADER_LENGTH;
         if (messageInfo.jsonMessage) {
             length += 4;
             if (messageInfo.jsonMessage) {
@@ -38,21 +40,21 @@ class ChannelMessageUtils {
         if (messageInfo.binaryPayload) {
             length += messageInfo.binaryPayload.byteLength;
         }
-        const result = new Uint8Array(length);
-        const view = new DataView(result.buffer);
+        var result = new Uint8Array(length);
+        var view = new DataView(result.buffer);
         // Populate the header...
-        let timestamp = Date.now() + clockSkew;
+        var timestamp = Date.now() + clockSkew;
         if (timestamp <= lastTimestampSent) {
             timestamp = lastTimestampSent + 1;
         }
         view.setUint16(0, this.CHANNEL_ELEMENTS_VERSION_V1);
-        const topTime = Math.floor(timestamp / (Math.pow(2, 32)));
+        var topTime = Math.floor(timestamp / (Math.pow(2, 32)));
         view.setUint16(2, topTime);
-        const remainder = timestamp - (topTime * Math.pow(2, 32));
+        var remainder = timestamp - (topTime * Math.pow(2, 32));
         view.setUint32(4, remainder);
         view.setUint32(8, messageInfo.channelCode ? messageInfo.channelCode : 0);
         view.setUint32(12, messageInfo.senderCode ? messageInfo.senderCode : 0);
-        let behavior = 0;
+        var behavior = 0;
         if (messageInfo.priority) {
             behavior |= 0x01;
         }
@@ -62,7 +64,7 @@ class ChannelMessageUtils {
         view.setUint8(16, behavior);
         result.fill(0, 17, this.MESSAGE_HEADER_LENGTH);
         // Now the payload...
-        let offset = this.MESSAGE_HEADER_LENGTH;
+        var offset = this.MESSAGE_HEADER_LENGTH;
         if (jsonPayloadBuffer) {
             view.setUint32(offset, jsonPayloadBuffer.byteLength);
             offset += 4;
@@ -73,9 +75,10 @@ class ChannelMessageUtils {
             result.set(messageInfo.binaryPayload, offset);
         }
         return result;
-    }
-    static parseChannelMessage(message, enforceClockSync = true) {
-        const result = {
+    };
+    ChannelMessageUtils.parseChannelMessage = function (message, enforceClockSync) {
+        if (enforceClockSync === void 0) { enforceClockSync = true; }
+        var result = {
             valid: false,
             rawMessage: message
         };
@@ -83,22 +86,22 @@ class ChannelMessageUtils {
             result.errorMessage = 'Message is too short';
             return result;
         }
-        const view = new DataView(message.buffer, message.byteOffset);
+        var view = new DataView(message.buffer, message.byteOffset);
         if (view.getUint16(0) !== this.CHANNEL_ELEMENTS_VERSION_V1) {
             result.errorMessage = 'Message prefix is invalid.  Incorrect protocol?';
             return result;
         }
-        const topBytes = view.getUint16(2);
-        const bottomBytes = view.getUint32(4);
-        const timestamp = topBytes * Math.pow(2, 32) + bottomBytes;
-        const delta = Date.now() - timestamp;
+        var topBytes = view.getUint16(2);
+        var bottomBytes = view.getUint32(4);
+        var timestamp = topBytes * Math.pow(2, 32) + bottomBytes;
+        var delta = Date.now() - timestamp;
         if (enforceClockSync && Math.abs(delta) > 15000) {
             result.valid = false;
             result.errorMessage = "Clocks are too far out of sync, or message timestamp is invalid";
             return result;
         }
-        const behavior = view.getUint8(16);
-        const contents = {
+        var behavior = view.getUint8(16);
+        var contents = {
             serializedMessage: message,
             timestamp: timestamp,
             channelCode: view.getUint32(8),
@@ -110,9 +113,9 @@ class ChannelMessageUtils {
         result.contents = contents;
         result.valid = true;
         if (contents.channelCode === 0 && contents.senderCode === 0) {
-            const jsonLength = view.getUint32(this.MESSAGE_HEADER_LENGTH);
+            var jsonLength = view.getUint32(this.MESSAGE_HEADER_LENGTH);
             try {
-                const jsonString = new text_encoding_utf_8_1.TextDecoder("utf-8").decode(message.subarray(this.MESSAGE_HEADER_LENGTH + 4, this.MESSAGE_HEADER_LENGTH + 4 + jsonLength));
+                var jsonString = new text_encoding_utf_8_1.TextDecoder("utf-8").decode(message.subarray(this.MESSAGE_HEADER_LENGTH + 4, this.MESSAGE_HEADER_LENGTH + 4 + jsonLength));
                 contents.controlMessagePayload = {
                     jsonMessage: JSON.parse(jsonString)
                 };
@@ -126,8 +129,9 @@ class ChannelMessageUtils {
             }
         }
         return result;
-    }
-}
+    };
+    return ChannelMessageUtils;
+}());
 ChannelMessageUtils.MESSAGE_HEADER_LENGTH = 32;
 ChannelMessageUtils.CHANNEL_ELEMENTS_VERSION_V1 = 0xCEB1;
 exports.ChannelMessageUtils = ChannelMessageUtils;

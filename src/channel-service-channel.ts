@@ -1,5 +1,5 @@
 
-import { FullIdentity, SignedKeyIdentity } from "./channel-service-identity";
+import { SignedKeyIdentity } from "./channel-service-identity";
 
 export interface ChannelInformation extends BasicChannelInformation {
   transportUrl: string;

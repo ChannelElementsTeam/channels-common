@@ -1,5 +1,5 @@
 
-import { FullIdentity, AddressIdentity, SignedAddressIdentity, SignedKeyIdentity } from "./channel-service-identity";
+import { SignedAddressIdentity, SignedKeyIdentity } from "./channel-service-identity";
 
 // ----------------------------------------------------------------------------
 // This defines the content of the messages carried on the control channel

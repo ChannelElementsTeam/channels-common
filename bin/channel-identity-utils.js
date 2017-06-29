@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var channels_ethereum_utils_1 = require("./channels-ethereum-utils");
 var crypto = require("crypto");
-var base64url_1 = require("base64url");
+// Kingston: base64url-adhoc because otherwise compiler errors:  see https://github.com/brianloveswords/base64url/issues/13
+var base64url_adhoc_1 = require("base64url-adhoc");
 var secp256k1 = require('secp256k1');
 var KeyEncoder = require('key-encoder');
 var jws = require('jws');
@@ -22,7 +23,7 @@ var ChannelIdentityUtils = (function () {
         var publicKey = secp256k1.publicKeyCreate(new Buffer(privateKey));
         var ethPublic = channels_ethereum_utils_1.EthereumUtils.importPublic(publicKey);
         var ethAddress = channels_ethereum_utils_1.EthereumUtils.pubToAddress(ethPublic, false);
-        return base64url_1.default.encode(ethAddress);
+        return base64url_adhoc_1.default.encode(ethAddress);
     };
     ChannelIdentityUtils.getKeyInfo = function (privateKey) {
         var publicKey = secp256k1.publicKeyCreate(new Buffer(privateKey));
@@ -35,7 +36,7 @@ var ChannelIdentityUtils = (function () {
             publicKeyBytes: publicKey,
             publicKeyPem: keyEncoder.encodePublic(publicKey.toString('hex'), 'raw', 'pem'),
             ethereumAddress: '0x' + ethAddress.toString('hex'),
-            address: base64url_1.default.encode(ethAddress)
+            address: base64url_adhoc_1.default.encode(ethAddress)
         };
         return result;
     };

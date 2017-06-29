@@ -1,7 +1,8 @@
 import { KeyInfo, FullIdentity, KeyIdentity, AddressIdentity, Signable, Signed, SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
 import { EthereumUtils } from "./channels-ethereum-utils";
 import * as crypto from 'crypto';
-import base64url from 'base64url';
+// Kingston: base64url-adhoc because otherwise compiler errors:  see https://github.com/brianloveswords/base64url/issues/13
+import base64url from 'base64url-adhoc';
 const secp256k1 = require('secp256k1');
 const KeyEncoder = require('key-encoder');
 const jws = require('jws');

@@ -1,7 +1,9 @@
 import { KeyInfo, FullIdentity, KeyIdentity, AddressIdentity, Signable, Signed, SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
+import { EthereumUtils } from "./channels-ethereum-utils";
 import * as crypto from 'crypto';
+// Kingston: base64url-adhoc because otherwise compiler errors:  see https://github.com/brianloveswords/base64url/issues/13
+import base64url from 'base64url-adhoc';
 const secp256k1 = require('secp256k1');
-const ethereumUtils = require('ethereumjs-util');
 const KeyEncoder = require('key-encoder');
 const jws = require('jws');
 
@@ -19,24 +21,24 @@ export class ChannelIdentityUtils {
 
   static generateValidAddress(): string {
     const privateKey = this.generatePrivateKey();
-    const publicKey = secp256k1.publicKeyCreate(new Buffer(privateKey)) as Uint8Array;
-    const ethPublic = ethereumUtils.importPublic(new Buffer(publicKey)) as Uint8Array;
-    const ethAddress = ethereumUtils.pubToAddress(ethPublic, false) as Uint8Array;
-    return new Buffer(ethAddress).toString('base64');
+    const publicKey = secp256k1.publicKeyCreate(new Buffer(privateKey));
+    const ethPublic = EthereumUtils.importPublic(publicKey);
+    const ethAddress = EthereumUtils.pubToAddress(ethPublic, false);
+    return base64url.encode(ethAddress);
   }
 
   static getKeyInfo(privateKey: Uint8Array): KeyInfo {
-    const publicKey = secp256k1.publicKeyCreate(new Buffer(privateKey)) as Uint8Array;
-    const ethPublic = ethereumUtils.importPublic(new Buffer(publicKey)) as Uint8Array;
-    const ethAddress = ethereumUtils.pubToAddress(ethPublic, false) as Uint8Array;
+    const publicKey = secp256k1.publicKeyCreate(new Buffer(privateKey));
+    const ethPublic = EthereumUtils.importPublic(publicKey);
+    const ethAddress = EthereumUtils.pubToAddress(ethPublic, false);
     const keyEncoder = new KeyEncoder('secp256k1');
     const result: KeyInfo = {
       privateKeyBytes: privateKey,
       privateKeyPem: keyEncoder.encodePrivate(new Buffer(privateKey).toString('hex'), 'raw', 'pem'),
       publicKeyBytes: publicKey,
-      publicKeyPem: keyEncoder.encodePublic(new Buffer(publicKey).toString('hex'), 'raw', 'pem'),
-      ethereumAddress: '0x' + new Buffer(ethAddress).toString('hex'),
-      address: new Buffer(ethAddress).toString('base64')
+      publicKeyPem: keyEncoder.encodePublic(publicKey.toString('hex'), 'raw', 'pem'),
+      ethereumAddress: '0x' + ethAddress.toString('hex'),
+      address: base64url.encode(ethAddress)
     };
     return result;
   }

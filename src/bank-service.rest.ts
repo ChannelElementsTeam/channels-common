@@ -72,7 +72,7 @@ export interface BankServiceEndpoints {
 }
 
 export interface HasBankServiceEndpoints {
-  serviceEndpoints: HasBankServiceEndpoints;
+  serviceEndpoints: BankServiceEndpoints;
 }
 
 

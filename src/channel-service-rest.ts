@@ -5,12 +5,15 @@ export const CHANNELS_PROTOCOL = "https://channelelements.com/protocols/client-s
 // ----------------------------------------------------------------------------
 // JSON response to /channel-elements.json
 // ----------------------------------------------------------------------------
-export interface ChannelServiceDescription extends HasProtocolVersion, HasServiceEndpoints, HasExtensions {
+export interface ChannelServiceDescription {
   protocol: string;
   provider: {
     name: string;
     logo: string;
     homepage: string;
+    account: string;  // for payments
+    bankUrl: string;  // for payments
+    publicKey: string;
     details: any;
   };
   implementation: {
@@ -27,9 +30,12 @@ export interface ChannelServiceDescription extends HasProtocolVersion, HasServic
 // Response to GET share code URL (when request contains header: Accepts: application/json)
 // ----------------------------------------------------------------------------
 
-export interface ChannelShareCodeResponse extends HasProtocolVersion, HasServiceEndpoints, HasExtensions {
+export interface ChannelShareCodeResponse {
+  protocol: string;  // e.g., "1.0.0":  conforms to which version of the specification
   invitationId: string;
   channelInfo: BasicChannelInformation;
+  serviceEndpoints: ProviderServiceEndpoints;
+  extensions: any;
 }
 
 // ----------------------------------------------------------------------------
@@ -52,7 +58,7 @@ export interface ChannelCreateDetails extends HasMemberContractDetails {
 export interface ChannelCreateResponse extends ChannelInformation { }
 
 // type = 'share', identity type:  SignedAddressIdentity
-export interface ChannelShareDetails extends HasChannel, HasExtensions {
+export interface ChannelShareDetails extends HasChannel {
   extensions: any;
 }
 export interface ChannelShareResponse {
@@ -109,24 +115,12 @@ export interface ProviderServiceEndpoints {
   restServiceUrl: string;  // to use the service, always with POST with identity and signature
 }
 
-export interface HasExtensions {
-  extensions?: any;
-}
-
 export interface HasMemberContractDetails {
   memberContract: MemberContractDetails;
 }
 
 export interface HasChannel {
   channel: string;
-}
-
-export interface HasProtocolVersion {
-  protocol: string;  // e.g., "1.0.0":  conforms to which version of the specification
-}
-
-export interface HasServiceEndpoints {
-  serviceEndpoints: ProviderServiceEndpoints;
 }
 
 export interface NotificationSettings {

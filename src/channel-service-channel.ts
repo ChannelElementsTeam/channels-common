@@ -31,11 +31,25 @@ export interface ChannelContractDetails {
 
 export interface ServiceContractInfo {
   options: ChannelOptions;
+  channelPricing: ChannelPricing;  // creator is responsible for channel cost
   extensions: any;
 }
+
+export interface ChannelPricing {
+  perMessageSent: number;
+  perMessageDelivered: number;
+  perMessageStored: number;
+}
+
+
 export interface ParticipationContract {
   type: string;
+  cards: { [packageWildcardString: string]: CardParticipationContract };
   extensions?: any;
+}
+
+export interface CardParticipationContract {
+  price: number;  // positive: payable to creator; negative: payable to recipient
 }
 
 export interface ChannelOptions {

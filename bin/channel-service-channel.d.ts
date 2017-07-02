@@ -25,11 +25,23 @@ export interface ChannelContractDetails {
 }
 export interface ServiceContractInfo {
     options: ChannelOptions;
+    channelPricing: ChannelPricing;
     extensions: any;
+}
+export interface ChannelPricing {
+    perMessageSent: number;
+    perMessageDelivered: number;
+    perMessageStored: number;
 }
 export interface ParticipationContract {
     type: string;
+    cards: {
+        [packageWildcardString: string]: CardParticipationContract;
+    };
     extensions?: any;
+}
+export interface CardParticipationContract {
+    price: number;
 }
 export interface ChannelOptions {
     history?: boolean;

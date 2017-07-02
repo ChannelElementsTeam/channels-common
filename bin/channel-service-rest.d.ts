@@ -1,12 +1,15 @@
 import { MemberContractDetails, ChannelContractDetails, ChannelInformation, BasicChannelInformation } from "./channel-service-channel";
 import { SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
 export declare const CHANNELS_PROTOCOL = "https://channelelements.com/protocols/client-server/0.2.0";
-export interface ChannelServiceDescription extends HasProtocolVersion, HasServiceEndpoints, HasExtensions {
+export interface ChannelServiceDescription {
     protocol: string;
     provider: {
         name: string;
         logo: string;
         homepage: string;
+        account: string;
+        bankUrl: string;
+        publicKey: string;
         details: any;
     };
     implementation: {
@@ -18,9 +21,12 @@ export interface ChannelServiceDescription extends HasProtocolVersion, HasServic
     };
     serviceEndpoints: ProviderServiceEndpoints;
 }
-export interface ChannelShareCodeResponse extends HasProtocolVersion, HasServiceEndpoints, HasExtensions {
+export interface ChannelShareCodeResponse {
+    protocol: string;
     invitationId: string;
     channelInfo: BasicChannelInformation;
+    serviceEndpoints: ProviderServiceEndpoints;
+    extensions: any;
 }
 export interface ChannelServiceRequest<I extends SignedKeyIdentity | SignedAddressIdentity, T> {
     type: string;
@@ -33,7 +39,7 @@ export interface ChannelCreateDetails extends HasMemberContractDetails {
 }
 export interface ChannelCreateResponse extends ChannelInformation {
 }
-export interface ChannelShareDetails extends HasChannel, HasExtensions {
+export interface ChannelShareDetails extends HasChannel {
     extensions: any;
 }
 export interface ChannelShareResponse {
@@ -77,20 +83,11 @@ export interface ProviderServiceEndpoints {
     homeUrl: string;
     restServiceUrl: string;
 }
-export interface HasExtensions {
-    extensions?: any;
-}
 export interface HasMemberContractDetails {
     memberContract: MemberContractDetails;
 }
 export interface HasChannel {
     channel: string;
-}
-export interface HasProtocolVersion {
-    protocol: string;
-}
-export interface HasServiceEndpoints {
-    serviceEndpoints: ProviderServiceEndpoints;
 }
 export interface NotificationSettings {
     suspended?: boolean;

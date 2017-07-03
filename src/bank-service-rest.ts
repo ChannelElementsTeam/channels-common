@@ -39,7 +39,7 @@ export interface BankServiceRequest<I extends SignedKeyIdentity | SignedAddressI
 // type = 'open-account', identity type:  SignedKeyIdentity
 export interface BankOpenAccountDetails { }
 
-export interface BankOpenAccountResponse { }
+export interface BankOpenAccountResponse extends BankGetAccountResponse { }
 
 // type = 'get-account', identity type: SignedAddressIdentity
 export interface BankGetAccountDetails { }

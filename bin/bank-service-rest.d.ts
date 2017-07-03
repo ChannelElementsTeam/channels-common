@@ -24,7 +24,7 @@ export interface BankServiceRequest<I extends SignedKeyIdentity | SignedAddressI
 }
 export interface BankOpenAccountDetails {
 }
-export interface BankOpenAccountResponse {
+export interface BankOpenAccountResponse extends BankGetAccountResponse {
 }
 export interface BankGetAccountDetails {
 }

@@ -57,6 +57,7 @@ export interface BankTransferDetails {
   reference: string;
 }
 export interface BankTransferResponse {
+  bankUrl: string;
   receiptSignature: string;
 }
 
@@ -64,6 +65,14 @@ export interface BankTransferResponse {
 // ----------------------------------------------------------------------------
 // Miscellaneous interfaces
 // ----------------------------------------------------------------------------
+
+export interface BankTransferReceipt {
+  reference: string;
+  amount: number;
+  timestamp: number;
+  from: BankAccountInformation;
+  to: BankAccountInformation;
+}
 
 export interface BankServiceEndpoints {
   descriptionUrl: string; // returns ChannelBankDescription in JSON

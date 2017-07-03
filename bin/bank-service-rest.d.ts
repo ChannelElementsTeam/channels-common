@@ -1,4 +1,4 @@
-import { SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
+import { SignedKeyIdentity, SignedAddressIdentity, Signable } from "./channel-service-identity";
 export declare const BANKING_PROTOCOL = "https://channelelements.com/protocols/banking/0.1.0";
 export interface ChannelBankDescription extends HasBankServiceEndpoints {
     protocol: string;
@@ -41,7 +41,7 @@ export interface BankTransferResponse {
     bankUrl: string;
     receiptSignature: string;
 }
-export interface BankTransferReceipt {
+export interface BankTransferReceipt extends Signable {
     reference: string;
     amount: number;
     timestamp: number;

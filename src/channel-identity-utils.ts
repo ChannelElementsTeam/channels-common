@@ -92,7 +92,7 @@ export class ChannelIdentityUtils {
     return result;
   }
 
-  private static sign(keyInfo: KeyInfo, object: any): any {
+  static sign<T extends Signable>(keyInfo: KeyInfo, object: T): string {
     const jwsSignature = jws.sign({
       header: { alg: 'RS256' },
       payload: object,
@@ -101,11 +101,11 @@ export class ChannelIdentityUtils {
     return jwsSignature;
   }
 
-  static verifySignedObject<T extends Signable>(object: Signed, publicKey: string, expectedSignTime: number): T {
-    if (!this.verify(object.signature, publicKey)) {
+  static decode<T extends Signable>(signature: string, publicKey: string, expectedSignTime: number): T {
+    if (!this.verify(signature, publicKey)) {
       return null;
     }
-    const decoded = jws.decode(object.signature);
+    const decoded = jws.decode(signature);
     try {
       const result = JSON.parse(decoded.payload) as T;
       if (expectedSignTime && Math.abs(result.signedAt - expectedSignTime) > MAX_VERIFY_CLOCK_SKEW) {
@@ -118,7 +118,7 @@ export class ChannelIdentityUtils {
     }
   }
 
-  private static verify(signature: any, publicKeyPem: string): boolean {
+  private static verify(signature: string, publicKeyPem: string): boolean {
     try {
       return jws.verify(signature, 'RS256', publicKeyPem);
     } catch (err) {

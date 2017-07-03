@@ -94,11 +94,11 @@ var ChannelIdentityUtils = (function () {
         });
         return jwsSignature;
     };
-    ChannelIdentityUtils.verifySignedObject = function (object, publicKey, expectedSignTime) {
-        if (!this.verify(object.signature, publicKey)) {
+    ChannelIdentityUtils.decode = function (signature, publicKey, expectedSignTime) {
+        if (!this.verify(signature, publicKey)) {
             return null;
         }
-        var decoded = jws.decode(object.signature);
+        var decoded = jws.decode(signature);
         try {
             var result = JSON.parse(decoded.payload);
             if (expectedSignTime && Math.abs(result.signedAt - expectedSignTime) > MAX_VERIFY_CLOCK_SKEW) {

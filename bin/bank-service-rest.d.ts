@@ -29,6 +29,7 @@ export interface BankOpenAccountResponse {
 export interface BankGetAccountDetails {
 }
 export interface BankGetAccountResponse {
+    accountAddress: string;
     balance: number;
     lastTransaction: number;
 }

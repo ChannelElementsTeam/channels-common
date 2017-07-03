@@ -45,6 +45,7 @@ export interface BankOpenAccountResponse { }
 export interface BankGetAccountDetails { }
 
 export interface BankGetAccountResponse {
+  accountAddress: string;
   balance: number;  // positive: available for withdrawal, negative: overdrawn
   lastTransaction: number;  // timestamp
 }

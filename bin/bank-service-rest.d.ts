@@ -35,18 +35,22 @@ export interface BankGetAccountResponse {
 export interface BankTransferDetails {
     amount: number;
     to: BankAccountInformation;
-    reference: string;
+    requestReference: string;
 }
 export interface BankTransferResponse {
+    signedReceipts: SignedBankReceipt[];
+}
+export interface SignedBankReceipt {
     bankUrl: string;
-    receiptSignature: string;
+    signedReceipt: string;
 }
 export interface BankTransferReceipt extends Signable {
-    reference: string;
+    requestReference: string;
     amount: number;
     timestamp: number;
     from: BankAccountInformation;
     to: BankAccountInformation;
+    bankReference: string;
 }
 export interface BankServiceEndpoints {
     descriptionUrl: string;

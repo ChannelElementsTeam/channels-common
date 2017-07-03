@@ -54,11 +54,10 @@ export interface BankGetAccountResponse {
 export interface BankTransferDetails {
   amount: number;
   to: BankAccountInformation;
-  reference: string;
+  requestReference: string;
 }
 export interface BankTransferResponse {
-  bankUrl: string;
-  receiptSignature: string;
+  signedReceipts: SignedBankReceipt[];  // recipient's bank comes first, sender's bank comes last
 }
 
 
@@ -66,12 +65,19 @@ export interface BankTransferResponse {
 // Miscellaneous interfaces
 // ----------------------------------------------------------------------------
 
+
+export interface SignedBankReceipt {
+  bankUrl: string;
+  signedReceipt: string;  // result of signing a BankTransferReceipt using the public key returned from the bankUrl
+}
+
 export interface BankTransferReceipt extends Signable {
-  reference: string;
+  requestReference: string;
   amount: number;
   timestamp: number;
   from: BankAccountInformation;
   to: BankAccountInformation;
+  bankReference: string;
 }
 
 export interface BankServiceEndpoints {

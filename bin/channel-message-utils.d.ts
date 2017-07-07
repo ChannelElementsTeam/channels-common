@@ -14,6 +14,7 @@ export interface MessageToSerialize {
     history: boolean;
     jsonMessage?: any;
     binaryPayload?: Uint8Array;
+    timestamp?: number;
 }
 export interface ChannelMessage {
     serializedMessage: Uint8Array;

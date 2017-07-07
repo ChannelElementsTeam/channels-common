@@ -50,10 +50,11 @@ var ChannelMessageUtils = (function () {
         var result = new Uint8Array(length);
         var view = new DataView(result.buffer);
         // Populate the header...
-        var timestamp = Date.now() + clockSkew;
+        var timestamp = messageInfo.timestamp || (Date.now() + clockSkew);
         if (timestamp <= lastTimestampSent) {
             timestamp = lastTimestampSent + 1;
         }
+        messageInfo.timestamp = timestamp;
         view.setUint16(0, this.CHANNEL_ELEMENTS_VERSION_V1);
         var topTime = Math.floor(timestamp / (Math.pow(2, 32)));
         view.setUint16(2, topTime);

@@ -53,11 +53,11 @@ export class ChannelMessageUtils {
     const view = new DataView(result.buffer);
 
     // Populate the header...
-
-    let timestamp: number = Date.now() + clockSkew;
+    let timestamp: number = messageInfo.timestamp || (Date.now() + clockSkew);
     if (timestamp <= lastTimestampSent) {
       timestamp = lastTimestampSent + 1;
     }
+    messageInfo.timestamp = timestamp;
     view.setUint16(0, this.CHANNEL_ELEMENTS_VERSION_V1);
     const topTime = Math.floor(timestamp / (Math.pow(2, 32)));
     view.setUint16(2, topTime);
@@ -152,6 +152,7 @@ export interface MessageToSerialize {
   history: boolean;
   jsonMessage?: any;
   binaryPayload?: Uint8Array;
+  timestamp?: number;
 }
 
 export interface ChannelMessage {

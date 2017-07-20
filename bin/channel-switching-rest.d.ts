@@ -1,4 +1,4 @@
-import { MemberContractDetails, ChannelContractDetails, ChannelInformation, BasicChannelInformation } from "./channel-service-channel";
+import { MemberContractDetails, ChannelContractDetails, ChannelInformation, BasicChannelInformation } from "./channel-switching-channel";
 import { SignedKeyIdentity, SignedAddressIdentity } from "./channels-identity";
 import { ServiceRequest, ServiceEndpoints, ServiceDescription, SignedBankReceipt } from "./channels-common";
 export declare const CHANNELS_SWITCH_PROTOCOL = "https://channelelements.org/protocols/switch";
@@ -13,14 +13,14 @@ export interface ChannelShareCodeResponse {
 }
 export interface SwitchingServiceRequest<I extends SignedKeyIdentity | SignedAddressIdentity, T> extends ServiceRequest<I, T> {
 }
-export interface SwitchRegisterUserDetails extends RegistrationDetails {
+export interface SwitchRegisterUserDetails extends SwitchRegistrationDetails {
 }
-export interface SwitchRegisterUserResponse extends RegistrationResponse {
+export interface SwitchRegisterUserResponse extends SwitchRegistrationResponse {
 }
-export interface CardRegistryPaymentDetails {
+export interface SwitchPaymentDetails {
     signedPayment?: SignedBankReceipt;
 }
-export interface CardRegistryPaymentResponse {
+export interface SwitchPaymentResponse {
 }
 export interface ChannelCreateDetails extends HasMemberContractDetails {
     name?: string;
@@ -55,13 +55,13 @@ export interface ChannelsListResponse {
     total: number;
     channels: ChannelInformation[];
 }
-export interface GetRegistrationDetails {
+export interface GetSwitchRegistrationDetails {
 }
-export interface GetRegistrationResponse extends RegistrationResponse {
+export interface GetSwitchRegistrationResponse extends SwitchRegistrationResponse {
 }
-export interface UpdateRegistrationDetails extends RegistrationDetails {
+export interface UpdateSwitchRegistrationDetails extends SwitchRegistrationDetails {
 }
-export interface UpdateRegistrationResponse extends RegistrationResponse {
+export interface UpdateSwitchRegistrationResponse extends SwitchRegistrationResponse {
 }
 export interface HasMemberContractDetails {
     memberContract: MemberContractDetails;
@@ -73,27 +73,27 @@ export interface NotificationSettings {
     suspended?: boolean;
     smsNumber?: string;
     minimumSmsIntervalMinutes?: number;
-    webPushNotifications?: WebPushNotificationInfo[];
+    webPushNotifications?: WebPushSwitchNotificationInfo[];
     minimumWebPushIntervalMinutes?: number;
-    timing?: NotificationTiming;
+    timing?: SwitchNotificationTiming;
     smsNotificationCallbackUrlTemplate?: string;
     minimumChannelInactiveNotificationIntervalMinutes?: number;
     minimumChannelActiveNotificationIntervalMinutes?: number;
 }
-export interface NotificationTiming {
+export interface SwitchNotificationTiming {
     notBeforeMinutes: number;
     notAfterMinutes: number;
     noNotificationDays: number[];
 }
-export interface WebPushNotificationInfo {
+export interface WebPushSwitchNotificationInfo {
     type: string;
     browserPublicKey: string;
 }
-export interface RegistrationDetails {
+export interface SwitchRegistrationDetails {
     timezone?: string;
     notifications?: NotificationSettings;
 }
-export interface RegistrationResponse {
+export interface SwitchRegistrationResponse {
     timezone?: string;
     notifications?: NotificationSettings;
 }

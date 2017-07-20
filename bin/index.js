@@ -8,4 +8,6 @@ __export(require("./bank-service-rest"));
 __export(require("./channel-message-utils"));
 __export(require("./channel-identity-utils"));
 __export(require("./card-registry-rest"));
+__export(require("./bank-service-rest"));
+__export(require("./mine-service-rest"));
 //# sourceMappingURL=index.js.map

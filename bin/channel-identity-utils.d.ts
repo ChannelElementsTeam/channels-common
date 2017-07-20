@@ -1,4 +1,4 @@
-import { KeyInfo, Signable, SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
+import { KeyInfo, Signable, SignedKeyIdentity, SignedAddressIdentity } from "./channels-identity";
 export declare class ChannelIdentityUtils {
     static generatePrivateKey(): Uint8Array;
     static generateValidAddress(): string;

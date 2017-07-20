@@ -1,5 +1,5 @@
 
-import { SignedKeyIdentity } from "./channel-service-identity";
+import { SignedKeyIdentity } from "./channels-identity";
 
 export interface ChannelInformation extends BasicChannelInformation {
   transportUrl: string;
@@ -40,7 +40,6 @@ export interface ChannelPricing {
   perMessageDelivered: number;
   perMessageStored: number;
 }
-
 
 export interface ParticipationContract {
   type: string;

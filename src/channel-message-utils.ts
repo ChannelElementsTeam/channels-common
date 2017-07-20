@@ -1,5 +1,5 @@
 import { TextDecoder, TextEncoder } from 'text-encoding-utf-8';
-import { ControlChannelMessage } from "./channel-service-control";
+import { ControlChannelMessage } from "./channel-switching-control";
 
 export class ChannelMessageUtils {
   static MESSAGE_HEADER_LENGTH = 32;

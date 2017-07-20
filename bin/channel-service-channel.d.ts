@@ -1,4 +1,4 @@
-import { SignedKeyIdentity } from "./channel-service-identity";
+import { SignedKeyIdentity } from "./channels-identity";
 export interface ChannelInformation extends BasicChannelInformation {
     transportUrl: string;
     isCreator: boolean;

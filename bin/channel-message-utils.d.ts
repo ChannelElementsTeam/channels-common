@@ -1,4 +1,4 @@
-import { ControlChannelMessage } from "./channel-service-control";
+import { ControlChannelMessage } from "./channel-switching-control";
 export declare class ChannelMessageUtils {
     static MESSAGE_HEADER_LENGTH: number;
     static CHANNEL_ELEMENTS_VERSION_V1: number;

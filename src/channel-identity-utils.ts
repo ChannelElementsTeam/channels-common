@@ -1,4 +1,4 @@
-import { KeyInfo, FullIdentity, KeyIdentity, AddressIdentity, Signable, Signed, SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
+import { KeyInfo, FullIdentity, KeyIdentity, AddressIdentity, Signable, SignedKeyIdentity, SignedAddressIdentity } from "./channels-identity";
 import * as crypto from 'crypto';
 const secp256k1 = require('secp256k1');
 const ethereumUtils = require('ethereumjs-util');

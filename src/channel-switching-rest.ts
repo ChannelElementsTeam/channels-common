@@ -1,30 +1,10 @@
 import { MemberContractDetails, ChannelContractDetails, ChannelInformation, BasicChannelInformation } from "./channel-service-channel";
-import { SignedKeyIdentity, SignedAddressIdentity } from "./channel-service-identity";
+import { SignedKeyIdentity, SignedAddressIdentity } from "./channels-identity";
+import { ServiceRequest, ServiceEndpoints, ServiceDescription, SignedBankReceipt } from "./channels-common";
 
-export const CHANNELS_PROTOCOL = "https://channelelements.com/protocols/client-server/0.2.0";
-// ----------------------------------------------------------------------------
-// JSON response to /channel-elements.json
-// ----------------------------------------------------------------------------
-export interface ChannelServiceDescription {
-  protocol: string;
-  provider: {
-    name: string;
-    logo: string;
-    homepage: string;
-    account: string;  // for payments
-    bankUrl: string;  // for payments
-    publicKey: string;
-    details: any;
-  };
-  implementation: {
-    name: string;
-    logo: string;
-    homepage: string;
-    version: string;
-    extensions: any;
-  };
-  serviceEndpoints: ProviderServiceEndpoints;
-}
+export const CHANNELS_SWITCH_PROTOCOL = "https://channelelements.org/protocols/switch";
+
+export interface ChannelServiceDescription extends ServiceDescription { }
 
 // ----------------------------------------------------------------------------
 // Response to GET share code URL (when request contains header: Accepts: application/json)
@@ -34,7 +14,7 @@ export interface ChannelShareCodeResponse {
   protocol: string;  // e.g., "1.0.0":  conforms to which version of the specification
   invitationId: string;
   channelInfo: BasicChannelInformation;
-  serviceEndpoints: ProviderServiceEndpoints;
+  serviceEndpoints: ServiceEndpoints;
   extensions: any;
 }
 
@@ -44,13 +24,21 @@ export interface ChannelShareCodeResponse {
 // All requests and responses are in JSON
 // ----------------------------------------------------------------------------
 
-export interface ChannelServiceRequest<I extends SignedKeyIdentity | SignedAddressIdentity, T> {
-  type: string;
-  identity: I;
-  details: T;
+export interface SwitchingServiceRequest<I extends SignedKeyIdentity | SignedAddressIdentity, T> extends ServiceRequest<I, T> { }
+
+// type = 'register-user', identity type:  SignedKeyIdentity
+export interface SwitchRegisterUserDetails extends RegistrationDetails { }
+
+export interface SwitchRegisterUserResponse extends RegistrationResponse { }
+
+// type = 'pay', identity type: SignedAddressIdentity
+export interface CardRegistryPaymentDetails {
+  signedPayment?: SignedBankReceipt;
 }
 
-// type = 'create', identity type:  SignedKeyIdentity
+export interface CardRegistryPaymentResponse { }
+
+// type = 'create', identity type:  SignedAddressIdentity
 export interface ChannelCreateDetails extends HasMemberContractDetails {
   name?: string;
   channelContract: ChannelContractDetails; // shared with everyone
@@ -89,31 +77,19 @@ export interface ChannelsListResponse {
   channels: ChannelInformation[];
 }
 
-// type = 'get-registration', identity type: SignedKeyIdentity
+// type = 'get-registration', identity type: SignedAddressIdentity
 export interface GetRegistrationDetails { }
 
-export interface GetRegistrationResponse {
-  timezone?: string;  // such as 'America/Los_Angeles'
-  notifications?: NotificationSettings;  // applies to subscribed channels
-}
+export interface GetRegistrationResponse extends RegistrationResponse { }
 
-// type = 'update-registration', identity type: SignedKeyIdentity
-export interface UpdateRegistrationDetails {
-  timezone?: string;
-  notifications?: NotificationSettings; // only included fields will be modified
-}
+// type = 'update-registration', identity type: SignedAddressIdentity
+export interface UpdateRegistrationDetails extends RegistrationDetails { }
 
-export interface UpdateRegistrationResponse extends GetRegistrationResponse { }
+export interface UpdateRegistrationResponse extends RegistrationResponse { }
 
 // ----------------------------------------------------------------------------
 // Miscellaneous interfaces
 // ----------------------------------------------------------------------------
-
-export interface ProviderServiceEndpoints {
-  descriptionUrl: string; // returns ChannelServiceDescription in JSON
-  homeUrl: string;  // human-oriented service description, suitable for browser
-  restServiceUrl: string;  // to use the service, always with POST with identity and signature
-}
 
 export interface HasMemberContractDetails {
   memberContract: MemberContractDetails;
@@ -143,4 +119,14 @@ export interface NotificationTiming {
 export interface WebPushNotificationInfo {
   type: string;  // chrome, firefox, safari
   browserPublicKey: string;
+}
+
+export interface RegistrationDetails {
+  timezone?: string;
+  notifications?: NotificationSettings; // only included fields will be modified
+}
+
+export interface RegistrationResponse {
+  timezone?: string;
+  notifications: NotificationSettings;
 }

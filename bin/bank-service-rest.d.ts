@@ -1,7 +1,7 @@
 import { SignedKeyIdentity, SignedAddressIdentity, Signable } from "./channels-identity";
 import { BankAccountInformation, SignedBankReceipt, ServiceRequest, ServiceEndpoints, ServiceDescription } from "./channels-common";
 export declare const CHANNELS_BANK_PROTOCOL = "https://channelelements.org/protocols/bank";
-export interface BankeServiceDescription extends ServiceDescription {
+export interface BankServiceDescription extends ServiceDescription {
 }
 export interface BankServiceRequest<I extends SignedKeyIdentity | SignedAddressIdentity, T> extends ServiceRequest<I, T> {
 }

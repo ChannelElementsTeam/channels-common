@@ -3,7 +3,7 @@ import { BankAccountInformation, SignedBankReceipt, ServiceRequest, ServiceEndpo
 
 export const CHANNELS_BANK_PROTOCOL = "https://channelelements.org/protocols/bank";
 
-export interface BankeServiceDescription extends ServiceDescription { }
+export interface BankServiceDescription extends ServiceDescription { }
 
 // ----------------------------------------------------------------------------
 // REST Requests to serviceURL

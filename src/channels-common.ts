@@ -5,14 +5,14 @@ export interface ServiceDescription {
   version: {
     current: number;
     min: number;
-  }
+  };
   service: {
     name: string;
     logo: string;
     homepage: string;
     bankAccount?: BankAccountInformation;
-    address: string;
-    publicKey: string;
+    address?: string;
+    publicKey?: string;
     details: any;
   };
   implementation: {

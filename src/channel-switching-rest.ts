@@ -4,7 +4,7 @@ import { ServiceRequest, ServiceEndpoints, ServiceDescription, SignedBankReceipt
 
 export const CHANNELS_SWITCH_PROTOCOL = "https://channelelements.org/protocols/switch";
 
-export interface ChannelServiceDescription extends ServiceDescription { }
+export interface SwitchServiceDescription extends ServiceDescription { }
 
 // ----------------------------------------------------------------------------
 // Response to GET share code URL (when request contains header: Accepts: application/json)
@@ -128,5 +128,5 @@ export interface RegistrationDetails {
 
 export interface RegistrationResponse {
   timezone?: string;
-  notifications: NotificationSettings;
+  notifications?: NotificationSettings;
 }

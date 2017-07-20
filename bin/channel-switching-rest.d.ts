@@ -2,7 +2,7 @@ import { MemberContractDetails, ChannelContractDetails, ChannelInformation, Basi
 import { SignedKeyIdentity, SignedAddressIdentity } from "./channels-identity";
 import { ServiceRequest, ServiceEndpoints, ServiceDescription, SignedBankReceipt } from "./channels-common";
 export declare const CHANNELS_SWITCH_PROTOCOL = "https://channelelements.org/protocols/switch";
-export interface ChannelServiceDescription extends ServiceDescription {
+export interface SwitchServiceDescription extends ServiceDescription {
 }
 export interface ChannelShareCodeResponse {
     protocol: string;
@@ -95,5 +95,5 @@ export interface RegistrationDetails {
 }
 export interface RegistrationResponse {
     timezone?: string;
-    notifications: NotificationSettings;
+    notifications?: NotificationSettings;
 }

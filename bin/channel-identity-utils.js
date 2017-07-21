@@ -50,6 +50,9 @@ var ChannelIdentityUtils = (function () {
         };
         return result;
     };
+    ChannelIdentityUtils.decodeSignedKeySignature = function (signature, publicKey, expectedSignTime) {
+        return this.decode(signature, publicKey, expectedSignTime);
+    };
     ChannelIdentityUtils.createSignedAddressIdentity = function (keyInfo, address) {
         var addressInfo = {
             address: address,
@@ -60,6 +63,9 @@ var ChannelIdentityUtils = (function () {
             signature: this.sign(keyInfo, addressInfo)
         };
         return result;
+    };
+    ChannelIdentityUtils.decodeAddressSignature = function (signature, publicKey, expectedSignTime) {
+        return this.decode(signature, publicKey, expectedSignTime);
     };
     ChannelIdentityUtils.sign = function (keyInfo, object) {
         var jwsSignature = jws.sign({

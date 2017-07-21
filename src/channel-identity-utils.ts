@@ -54,6 +54,10 @@ export class ChannelIdentityUtils {
     return result;
   }
 
+  static decodeSignedKeySignature(signature: string, publicKey: string, expectedSignTime: number): KeyIdentity {
+    return this.decode<KeyIdentity>(signature, publicKey, expectedSignTime);
+  }
+
   static createSignedAddressIdentity(keyInfo: KeyInfo, address: string): SignedAddressIdentity {
     const addressInfo: AddressIdentity = {
       address: address,
@@ -64,6 +68,10 @@ export class ChannelIdentityUtils {
       signature: this.sign(keyInfo, addressInfo)
     };
     return result;
+  }
+
+  static decodeAddressSignature(signature: string, publicKey: string, expectedSignTime: number): AddressIdentity {
+    return this.decode<AddressIdentity>(signature, publicKey, expectedSignTime);
   }
 
   static sign<T extends Signable>(keyInfo: KeyInfo, object: T): string {

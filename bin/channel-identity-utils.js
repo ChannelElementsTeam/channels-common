@@ -51,7 +51,7 @@ var ChannelIdentityUtils = (function () {
         return result;
     };
     ChannelIdentityUtils.decodeSignedKey = function (signedKeyIdentity, expectedSignTime) {
-        return this.decode(signedKeyIdentity.signature, signedKeyIdentity.publicKey, expectedSignTime);
+        return this.decodeSignedKeySignature(signedKeyIdentity.signature, signedKeyIdentity.publicKey, expectedSignTime);
     };
     ChannelIdentityUtils.decodeSignedKeySignature = function (signature, publicKey, expectedSignTime) {
         return this.decode(signature, publicKey, expectedSignTime);

@@ -55,7 +55,7 @@ export class ChannelIdentityUtils {
   }
 
   static decodeSignedKey(signedKeyIdentity: SignedKeyIdentity, expectedSignTime: number): KeyIdentity {
-    return this.decode<KeyIdentity>(signedKeyIdentity.signature, signedKeyIdentity.publicKey, expectedSignTime);
+    return this.decodeSignedKeySignature(signedKeyIdentity.signature, signedKeyIdentity.publicKey, expectedSignTime);
   }
 
   static decodeSignedKeySignature(signature: string, publicKey: string, expectedSignTime: number): KeyIdentity {

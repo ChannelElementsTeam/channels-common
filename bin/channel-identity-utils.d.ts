@@ -3,7 +3,8 @@ export declare class ChannelIdentityUtils {
     static generatePrivateKey(): Uint8Array;
     static generateValidAddress(): string;
     static getKeyInfo(privateKey: Uint8Array): KeyInfo;
-    static createSignedKeyIdentity(keyInfo: KeyInfo, address: string, publicKey: string): SignedKeyIdentity;
+    static createSignedKeyIdentity(keyInfo: KeyInfo): SignedKeyIdentity;
+    static decodeSignedKey(signedKeyIdentity: SignedKeyIdentity, expectedSignTime: number): KeyIdentity;
     static decodeSignedKeySignature(signature: string, publicKey: string, expectedSignTime: number): KeyIdentity;
     static createSignedAddressIdentity(keyInfo: KeyInfo, address: string): SignedAddressIdentity;
     static decodeAddressSignature(signature: string, publicKey: string, expectedSignTime: number): AddressIdentity;

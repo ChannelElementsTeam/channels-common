@@ -38,17 +38,20 @@ var ChannelIdentityUtils = (function () {
         };
         return result;
     };
-    ChannelIdentityUtils.createSignedKeyIdentity = function (keyInfo, address, publicKey) {
+    ChannelIdentityUtils.createSignedKeyIdentity = function (keyInfo) {
         var addressInfo = {
-            address: address,
-            publicKey: publicKey,
+            address: keyInfo.address,
+            publicKey: keyInfo.publicKeyPem,
             signedAt: Date.now()
         };
         var result = {
-            publicKey: publicKey,
+            publicKey: keyInfo.publicKeyPem,
             signature: this.sign(keyInfo, addressInfo)
         };
         return result;
+    };
+    ChannelIdentityUtils.decodeSignedKey = function (signedKeyIdentity, expectedSignTime) {
+        return this.decode(signedKeyIdentity.signature, signedKeyIdentity.publicKey, expectedSignTime);
     };
     ChannelIdentityUtils.decodeSignedKeySignature = function (signature, publicKey, expectedSignTime) {
         return this.decode(signature, publicKey, expectedSignTime);

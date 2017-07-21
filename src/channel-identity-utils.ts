@@ -41,17 +41,21 @@ export class ChannelIdentityUtils {
     return result;
   }
 
-  static createSignedKeyIdentity(keyInfo: KeyInfo, address: string, publicKey: string): SignedKeyIdentity {
+  static createSignedKeyIdentity(keyInfo: KeyInfo): SignedKeyIdentity {
     const addressInfo: KeyIdentity = {
-      address: address,
-      publicKey: publicKey,
+      address: keyInfo.address,
+      publicKey: keyInfo.publicKeyPem,
       signedAt: Date.now()
     };
     const result: SignedKeyIdentity = {
-      publicKey: publicKey,
+      publicKey: keyInfo.publicKeyPem,
       signature: this.sign(keyInfo, addressInfo)
     };
     return result;
+  }
+
+  static decodeSignedKey(signedKeyIdentity: SignedKeyIdentity, expectedSignTime: number): KeyIdentity {
+    return this.decode<KeyIdentity>(signedKeyIdentity.signature, signedKeyIdentity.publicKey, expectedSignTime);
   }
 
   static decodeSignedKeySignature(signature: string, publicKey: string, expectedSignTime: number): KeyIdentity {

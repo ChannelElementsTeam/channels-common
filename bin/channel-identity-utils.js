@@ -56,13 +56,13 @@ var ChannelIdentityUtils = (function () {
     ChannelIdentityUtils.decodeSignedKeySignature = function (signature, publicKey, expectedSignTime) {
         return this.decode(signature, publicKey, expectedSignTime);
     };
-    ChannelIdentityUtils.createSignedAddressIdentity = function (keyInfo, address) {
+    ChannelIdentityUtils.createSignedAddressIdentity = function (keyInfo) {
         var addressInfo = {
-            address: address,
+            address: keyInfo.address,
             signedAt: Date.now()
         };
         var result = {
-            address: address,
+            address: keyInfo.address,
             signature: this.sign(keyInfo, addressInfo)
         };
         return result;

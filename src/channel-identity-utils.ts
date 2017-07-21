@@ -62,13 +62,13 @@ export class ChannelIdentityUtils {
     return this.decode<KeyIdentity>(signature, publicKey, expectedSignTime);
   }
 
-  static createSignedAddressIdentity(keyInfo: KeyInfo, address: string): SignedAddressIdentity {
+  static createSignedAddressIdentity(keyInfo: KeyInfo): SignedAddressIdentity {
     const addressInfo: AddressIdentity = {
-      address: address,
+      address: keyInfo.address,
       signedAt: Date.now()
     };
     const result: SignedAddressIdentity = {
-      address: address,
+      address: keyInfo.address,
       signature: this.sign(keyInfo, addressInfo)
     };
     return result;

@@ -1,4 +1,5 @@
 import { SignedAddressIdentity, SignedKeyIdentity } from "./channels-identity";
+import { HasMemberIdentity } from "./channels-common";
 export interface ControlChannelMessage {
     requestId?: string;
     type: string;
@@ -46,9 +47,9 @@ export interface RateLimitDetails {
     channelAddress: string;
     options: string[];
 }
-export interface JoinNotificationDetails {
+export interface JoinNotificationDetails extends HasMemberIdentity {
     channelAddress: string;
-    memberIdentity: SignedKeyIdentity;
+    signedIdentity: SignedKeyIdentity;
     participantCode: number;
     participantDetails: any;
 }
@@ -65,7 +66,7 @@ export interface ControlMessagePayload {
     jsonMessage: ControlChannelMessage;
     binaryPortion?: Uint8Array;
 }
-export interface ChannelParticipantIdentity {
+export interface ChannelParticipantIdentity extends HasMemberIdentity {
     signedIdentity: SignedKeyIdentity;
     participantDetails: any;
 }

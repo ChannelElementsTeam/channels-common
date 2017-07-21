@@ -1,5 +1,6 @@
 
 import { SignedKeyIdentity } from "./channels-identity";
+import { HasMemberIdentity } from "./channels-common";
 
 export interface ChannelInformation extends BasicChannelInformation {
   transportUrl: string;
@@ -16,7 +17,7 @@ export interface BasicChannelInformation {
   created: number;
 }
 
-export interface ChannelMemberInfo {
+export interface ChannelMemberInfo extends HasMemberIdentity {
   identity: SignedKeyIdentity;
   isCreator: boolean;
   memberSince: number;
@@ -32,7 +33,7 @@ export interface ChannelContractDetails {
 export interface ServiceContractInfo {
   options: ChannelOptions;
   channelPricing: ChannelPricing;  // creator is responsible for channel cost
-  extensions: any;
+  serviceContractExtensions?: any;
 }
 
 export interface ChannelPricing {
@@ -44,7 +45,7 @@ export interface ChannelPricing {
 export interface ParticipationContract {
   type: string;
   cards: { [packageWildcardString: string]: CardParticipationContract };
-  extensions?: any;
+  participantContractExtensions?: any;
 }
 
 export interface CardParticipationContract {

@@ -1,4 +1,4 @@
-import { KeyInfo, FullIdentity, KeyIdentity, AddressIdentity, Signable, SignedKeyIdentity, SignedAddressIdentity } from "./channels-identity";
+import { KeyInfo, KeyIdentity, AddressIdentity, Signable, SignedKeyIdentity, SignedAddressIdentity } from "./channels-identity";
 import * as crypto from 'crypto';
 const secp256k1 = require('secp256k1');
 const ethereumUtils = require('ethereumjs-util');
@@ -37,32 +37,6 @@ export class ChannelIdentityUtils {
       publicKeyPem: keyEncoder.encodePublic(new Buffer(publicKey).toString('hex'), 'raw', 'pem'),
       ethereumAddress: '0x' + new Buffer(ethAddress).toString('hex'),
       address: new Buffer(ethAddress).toString('base64')
-    };
-    return result;
-  }
-
-  static createSignedFullIdentity(keyInfo: KeyInfo, name?: string, imageUrl?: string, contactMeShareCode?: string, extensions?: any): SignedKeyIdentity {
-    const identity: FullIdentity = {
-      address: keyInfo.address,
-      account: keyInfo.ethereumAddress,
-      publicKey: keyInfo.publicKeyPem,
-      signedAt: Date.now(),
-    };
-    if (name) {
-      identity.name = name;
-    }
-    if (imageUrl) {
-      identity.imageUrl = imageUrl;
-    }
-    if (contactMeShareCode) {
-      identity.contactMeShareCode = contactMeShareCode;
-    }
-    if (extensions) {
-      identity.extensions = extensions;
-    }
-    const result: SignedKeyIdentity = {
-      publicKey: keyInfo.publicKeyPem,
-      signature: this.sign(keyInfo, identity)
     };
     return result;
   }

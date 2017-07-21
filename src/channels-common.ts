@@ -20,7 +20,7 @@ export interface ServiceDescription {
     logo: string;
     homepage: string;
     version: string;
-    extensions: any;
+    implementationExtensions?: any;
   };
   serviceEndpoints: ServiceEndpoints;
 }
@@ -46,5 +46,17 @@ export interface SignedBankReceipt {
 export interface BankAccountInformation {
   accountAddress: string;
   bankUrl: string;
+}
 
+export interface HasMemberIdentity {
+  memberIdentity: MemberIdentityInfo;
+}
+
+export interface MemberIdentityInfo {
+  name?: string;
+  imageUrl?: string;
+  contactMeShareCode?: string;
+  bankAccount?: BankAccountInformation;
+  timezoneOffsetMinutes?: number;  // minutes before UTC (e.g., Pacific GMT-08:00 = 480)
+  memberExtensions?: any;
 }

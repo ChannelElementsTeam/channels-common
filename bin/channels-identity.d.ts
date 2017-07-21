@@ -15,14 +15,6 @@ export interface SignedAddressIdentity extends Signed {
 export interface Signed {
     signature: string;
 }
-export interface FullIdentity extends KeyIdentity {
-    account?: string;
-    name?: string;
-    imageUrl?: string;
-    contactMeShareCode?: string;
-    timezoneOffsetMinutes?: number;
-    extensions?: any;
-}
 export interface KeyIdentity extends AddressIdentity {
     publicKey: string;
 }

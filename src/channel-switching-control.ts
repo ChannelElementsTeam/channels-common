@@ -1,5 +1,6 @@
 
 import { SignedAddressIdentity, SignedKeyIdentity } from "./channels-identity";
+import { HasMemberIdentity } from "./channels-common";
 
 // ----------------------------------------------------------------------------
 // This defines the content of the messages carried on the control channel
@@ -78,10 +79,9 @@ export interface RateLimitDetails {
 }
 
 // type = 'notify-join'
-export interface JoinNotificationDetails {
+export interface JoinNotificationDetails extends HasMemberIdentity {
   channelAddress: string;
-  memberIdentity: SignedKeyIdentity;
-
+  signedIdentity: SignedKeyIdentity;
   participantCode: number;
   participantDetails: any;
 }
@@ -108,7 +108,7 @@ export interface ControlMessagePayload {
   binaryPortion?: Uint8Array;
 }
 
-export interface ChannelParticipantIdentity {
+export interface ChannelParticipantIdentity extends HasMemberIdentity {
   signedIdentity: SignedKeyIdentity;
   participantDetails: any;
 }

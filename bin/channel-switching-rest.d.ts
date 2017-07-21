@@ -1,6 +1,6 @@
 import { MemberContractDetails, ChannelContractDetails, ChannelInformation, BasicChannelInformation } from "./channel-switching-channel";
 import { SignedKeyIdentity, SignedAddressIdentity } from "./channels-identity";
-import { ServiceRequest, ServiceEndpoints, ServiceDescription, SignedBankReceipt } from "./channels-common";
+import { ServiceRequest, ServiceEndpoints, ServiceDescription, SignedBankReceipt, HasMemberIdentity } from "./channels-common";
 export declare const CHANNELS_SWITCH_PROTOCOL = "https://channelelements.org/protocols/switch";
 export interface SwitchServiceDescription extends ServiceDescription {
 }
@@ -9,7 +9,7 @@ export interface ChannelShareCodeResponse {
     invitationId: string;
     channelInfo: BasicChannelInformation;
     serviceEndpoints: ServiceEndpoints;
-    extensions: any;
+    shareExtensions: any;
 }
 export interface SwitchingServiceRequest<I extends SignedKeyIdentity | SignedAddressIdentity, T> extends ServiceRequest<I, T> {
 }
@@ -22,14 +22,14 @@ export interface SwitchPaymentDetails {
 }
 export interface SwitchPaymentResponse {
 }
-export interface ChannelCreateDetails extends HasMemberContractDetails {
+export interface ChannelCreateDetails extends HasMemberContractDetails, HasMemberIdentity {
     name?: string;
     channelContract: ChannelContractDetails;
 }
 export interface ChannelCreateResponse extends ChannelInformation {
 }
 export interface ChannelShareDetails extends HasChannel {
-    extensions: any;
+    shareExtensions: any;
 }
 export interface ChannelShareResponse {
     shareCodeUrl: string;
@@ -38,7 +38,7 @@ export interface ChannelGetDetails extends HasChannel {
 }
 export interface ChannelGetResponse extends ChannelInformation {
 }
-export interface ChannelAcceptDetails extends HasMemberContractDetails {
+export interface ChannelAcceptDetails extends HasMemberContractDetails, HasMemberIdentity {
     invitationId: string;
 }
 export interface ChannelAcceptResponse extends ChannelInformation {

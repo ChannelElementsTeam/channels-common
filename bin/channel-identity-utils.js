@@ -38,31 +38,6 @@ var ChannelIdentityUtils = (function () {
         };
         return result;
     };
-    ChannelIdentityUtils.createSignedFullIdentity = function (keyInfo, name, imageUrl, contactMeShareCode, extensions) {
-        var identity = {
-            address: keyInfo.address,
-            account: keyInfo.ethereumAddress,
-            publicKey: keyInfo.publicKeyPem,
-            signedAt: Date.now(),
-        };
-        if (name) {
-            identity.name = name;
-        }
-        if (imageUrl) {
-            identity.imageUrl = imageUrl;
-        }
-        if (contactMeShareCode) {
-            identity.contactMeShareCode = contactMeShareCode;
-        }
-        if (extensions) {
-            identity.extensions = extensions;
-        }
-        var result = {
-            publicKey: keyInfo.publicKeyPem,
-            signature: this.sign(keyInfo, identity)
-        };
-        return result;
-    };
     ChannelIdentityUtils.createSignedKeyIdentity = function (keyInfo, address, publicKey) {
         var addressInfo = {
             address: address,

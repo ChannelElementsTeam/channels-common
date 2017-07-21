@@ -74,6 +74,8 @@ export interface CardRegistryNotifyPurchaseResponse { }
 export interface CardRegistryEntry {
   entryId: string; // a GUID for this card registry entry, constant over versions of the same card
   approved: boolean;  // if false, do not use this card
+  pending: boolean;
+  rejectionReason: string;
   cardSourceWithVersion: string;  // e.g., 'ChannelElementsTeam/card-sample-text-w-comments'
   lastSubmitted: number;
   lastSubmittedByAddress: string;
@@ -81,6 +83,7 @@ export interface CardRegistryEntry {
   lastApprovedVersion: string;  // e.g., 1.0.3
   lastApproved: number;
   cardName: string;  // e.g., "Text with comments"
+  categories: string[]; // using slash delimiters
   websiteUrl: string;
   description: string;
   author: string;

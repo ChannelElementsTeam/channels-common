@@ -52,6 +52,8 @@ export interface CardRegistryNotifyPurchaseResponse {
 export interface CardRegistryEntry {
     entryId: string;
     approved: boolean;
+    pending: boolean;
+    rejectionReason: string;
     cardSourceWithVersion: string;
     lastSubmitted: number;
     lastSubmittedByAddress: string;
@@ -59,6 +61,7 @@ export interface CardRegistryEntry {
     lastApprovedVersion: string;
     lastApproved: number;
     cardName: string;
+    categories: string[];
     websiteUrl: string;
     description: string;
     author: string;

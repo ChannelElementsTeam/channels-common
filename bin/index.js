@@ -4,10 +4,9 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./channel-switching-rest"));
-__export(require("./bank-service-rest"));
-__export(require("./channel-message-utils"));
-__export(require("./channel-identity-utils"));
 __export(require("./card-registry-rest"));
 __export(require("./bank-service-rest"));
 __export(require("./mine-service-rest"));
+__export(require("./channel-message-utils"));
+__export(require("./channel-identity-utils"));
 //# sourceMappingURL=index.js.map

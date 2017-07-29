@@ -18,6 +18,20 @@ export interface BankRegisterUserDetails { }
 
 export interface BankRegisterUserResponse extends BankGetAccountResponse { }
 
+// type = 'register-bank', identity type:  SignedKeyIdentity
+export interface BankRegisterBankDetails {
+  bankProviderUrl: string;
+}
+
+export interface BankRegisterBankResponse extends BankGetAccountResponse { }
+
+// type = 'register-mine', identity type:  SignedKeyIdentity
+export interface BankRegisterMineDetails {
+  mineProviderUrl: string;
+}
+
+export interface BankRegisterMineResponse extends BankGetAccountResponse { }
+
 // type = 'get-account', identity type: SignedAddressIdentity
 export interface BankGetAccountDetails { }
 
@@ -34,7 +48,19 @@ export interface BankTransferDetails {
   requestReference: string;
 }
 export interface BankTransferResponse {
-  signedReceipts: SignedBankReceipt[];  // recipient's bank comes first, sender's bank comes last
+  signedReceipts: SignedBankReceipt[];  // recipient's bank comes first, requester's bank comes last
+}
+
+// type = 'interbank-transfer', identity type:  SignedAddressIdentity
+export interface InterBankTransferDetails {
+  amount: number;
+  to: string; // address of recipient account
+  requestReference: string;
+  sendingBankReference: string;
+}
+
+export interface InterBankTransferResponse {
+  signedReceipt: SignedBankReceipt;  // signed by recipient's bank
 }
 
 // ----------------------------------------------------------------------------
@@ -42,12 +68,13 @@ export interface BankTransferResponse {
 // ----------------------------------------------------------------------------
 
 export interface BankTransferReceipt extends Signable {
-  requestReference: string;
   amount: number;
   timestamp: number;
   from: BankAccountInformation;
   to: BankAccountInformation;
-  bankReference: string;
+  requestReference: string;
+  requesterBankReference: string;
+  recipientBankReference: string;
 }
 
 export interface BankServiceEndpoints extends ServiceEndpoints { }

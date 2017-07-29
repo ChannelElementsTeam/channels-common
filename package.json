@@ -1,6 +1,6 @@
 {
   "name": "channels-common",
-  "version": "0.2.9",
+  "version": "0.2.10",
   "description": "Common TypeScript code that could be used by the Channels server (switch) and the client",
   "main": "bin/main.js",
   "typings": "bin/main.d.ts",

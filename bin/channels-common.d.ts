@@ -22,6 +22,7 @@ export interface ServiceDescription {
         implementationExtensions?: any;
     };
     serviceEndpoints: ServiceEndpoints;
+    signedKeyIdentity: SignedKeyIdentity;
 }
 export interface ServiceRequest<I extends SignedKeyIdentity | SignedAddressIdentity, T> {
     version: number;
